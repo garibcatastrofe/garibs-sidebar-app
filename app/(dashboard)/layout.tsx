@@ -4,20 +4,20 @@
 import { motion } from "framer-motion";
 
 /* COMPONENTS */
-import {
-  Sidebar,
-  LinkSidebar,
-  UserData,
-} from "@/shared/components/sidebar/Sidebar";
+import { Sidebar, UserData } from "@/shared/components/sidebar/Sidebar";
 
 /* ICONS */
-import { Home, UsersRound } from "lucide-react";
+import { Home, UserRound, UsersRound } from "lucide-react";
 
 /* NAVIGATION */
 import { useRouter, usePathname } from "next/navigation";
 
 /* STORES */
 import { useSidebarStore } from "@/shared/components/sidebar/stores/sidebar.store";
+
+/* TYPES */
+import { LinkSidebar } from "@/shared/components/sidebar/types/linkSidebar";
+import { RouteTitle } from "@/shared/components/sidebar/components/routeTitle/RouteTitle";
 
 export default function LayoutDashboard({
   children,
@@ -32,7 +32,7 @@ export default function LayoutDashboard({
   const links: LinkSidebar[] = [
     {
       label: "Inicio",
-      href: "/",
+      href: "/home",
       icon: Home,
     },
     {
@@ -40,6 +40,11 @@ export default function LayoutDashboard({
       href: "/users",
       icon: UsersRound,
     },
+    {
+      label: "Perfil",
+      href: "/profile",
+      icon: UserRound,
+    }
   ];
 
   const userData: UserData | null = {
@@ -50,7 +55,7 @@ export default function LayoutDashboard({
 
   return (
     <motion.div
-      className="relative flex overflow-x-hidden overflow-y-hidden min-h-dvh"
+      className="relative lg:flex overflow-x-hidden overflow-y-hidden min-h-dvh"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5, ease: "easeInOut" }}
@@ -58,7 +63,7 @@ export default function LayoutDashboard({
       <Sidebar
         links={links}
         userData={userData}
-        logoutAction={async () => {}}
+        logoutAction={async () => router.push("/")}
         goToProfileAction={() => router.push("/profile")}
         isInProfilePage={pathname === "/profile"}
       />
@@ -69,6 +74,7 @@ export default function LayoutDashboard({
             : "lg:left-16 lg:w-[calc(100%-4rem)] z-40"
         }`}
       >
+        <RouteTitle links={links} />
         {children}
       </div>
     </motion.div>

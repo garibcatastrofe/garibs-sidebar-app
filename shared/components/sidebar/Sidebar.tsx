@@ -25,18 +25,12 @@ import { usePathname } from "next/navigation";
 import { useSidebarStore } from "@/shared/components/sidebar/stores/sidebar.store";
 
 /* TYPES */
-import { LucideIcon } from "lucide-react";
+import { LinkSidebar } from "./types/linkSidebar";
 
 /* LIBS */
 import { AnimatePresence, motion } from "framer-motion";
 import * as Tooltip from "@radix-ui/react-tooltip";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
-
-export type LinkSidebar = {
-  label: string;
-  href: string;
-  icon: LucideIcon;
-};
 
 export type UserData = {
   name: string;
@@ -97,7 +91,7 @@ export function Sidebar({
   return (
     <>
       <aside
-        className={`flex flex-col z-60 transition-all bg-background duration-300 justify-between h-dvh border-r border-r-line absolute lg:static ${expanded ? "w-64 left-0" : "lg:w-18 w-64 -left-64"}`}
+        className={`flex flex-col z-60 transition-all bg-background duration-300 justify-between h-dvh border-r border-r-line absolute lg:static ${expanded ? "w-64 top-0 left-0" : "lg:w-18 w-64 -left-64 top-0"}`}
       >
         <div className="flex flex-col w-full h-full p-4">
           <div
@@ -120,29 +114,27 @@ export function Sidebar({
             </button>
           </div>
 
-          <motion.div
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, ease: "easeInOut" }}
-            className="flex flex-col items-center w-full h-full max-h-full gap-2 overflow-x-hidden overflow-y-auto"
-          >
+          <div className="flex flex-col items-center h-full gap-2 overflow-x-hidden overflow-y-auto">
             <Tooltip.Provider delayDuration={100}>
               {links.map((link) => (
                 <Tooltip.Root
                   key={link.href}
-                  open={!expanded ? openTooltip === link.href : false}
-                  onOpenChange={(open) => {
-                    if (!expanded) {
-                      setOpenTooltip(open ? link.href : null);
-                    }
-                  }}
+                  open={!expanded && openTooltip === link.href}
                 >
                   <Tooltip.Trigger asChild>
                     <Link
                       href={link.href}
-                      className={`px-[0.70rem] py-2 rounded-xl flex relative group transition-all items-center duration-300 w-full ${expanded ? "gap-6" : "lg:gap-0 gap-6"} ${linkClasses(
-                        link.href,
-                      )}`}
+                      onMouseEnter={() => {
+                        if (!expanded) {
+                          setOpenTooltip(link.href);
+                        }
+                      }}
+                      onMouseLeave={() => {
+                        setOpenTooltip(null);
+                      }}
+                      className={`px-[0.70rem] py-2 rounded-xl flex relative transition-all items-center duration-300 w-full ${
+                        expanded ? "gap-6" : "lg:gap-0 gap-6"
+                      } ${linkClasses(link.href)}`}
                     >
                       <link.icon className="size-4 min-w-4 min-h-4" />
 
@@ -158,28 +150,49 @@ export function Sidebar({
                     </Link>
                   </Tooltip.Trigger>
 
-                  {!expanded && (
-                    <Tooltip.Portal>
-                      <Tooltip.Content
-                        side="right"
-                        sideOffset={25}
-                        className="px-3 py-1 text-sm font-medium border rounded-full z-70 bg-background text-ink border-line"
-                      >
-                        {link.label}
-                      </Tooltip.Content>
-                    </Tooltip.Portal>
-                  )}
+                  <AnimatePresence>
+                    {openTooltip === link.href && !expanded && (
+                      <Tooltip.Portal forceMount>
+                        <Tooltip.Content asChild side="right" sideOffset={25}>
+                          <motion.div
+                            initial={{
+                              opacity: 0,
+                              scale: 0.95,
+                              x: -4,
+                            }}
+                            animate={{
+                              opacity: 1,
+                              scale: 1,
+                              x: 0,
+                            }}
+                            exit={{
+                              opacity: 0,
+                              scale: 0.95,
+                              x: -4,
+                            }}
+                            transition={{
+                              duration: 0.1,
+                              ease: "easeOut",
+                            }}
+                            className="px-3 py-1 text-sm font-medium border rounded-full z-70 bg-background text-ink border-line"
+                          >
+                            {link.label}
+                          </motion.div>
+                        </Tooltip.Content>
+                      </Tooltip.Portal>
+                    )}
+                  </AnimatePresence>
                 </Tooltip.Root>
               ))}
             </Tooltip.Provider>
-          </motion.div>
+          </div>
         </div>
 
         <DropdownMenu.Root open={open} onOpenChange={setOpen}>
           <DropdownMenu.Trigger asChild>
             <button className="flex items-center w-full gap-4 p-4 overflow-hidden transition-all duration-300 border-t outline-none cursor-pointer hover:bg-surface border-t-line">
               <div
-                className={`rounded-full w-10 h-10 min-w-10 min-h-10 flex justify-center items-center bg-surface border relative ${pathname === "/organizer/profile" ? "border-primary" : "border-line"}`}
+                className={`rounded-full w-10 h-10 min-w-10 min-h-10 flex justify-center items-center bg-surface border relative ${isInProfilePage ? "border-primary" : "border-line"}`}
               >
                 {userData && userData?.profile_photo_url ? (
                   <Image

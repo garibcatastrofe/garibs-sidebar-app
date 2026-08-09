@@ -1,6 +1,6 @@
 /* COMPONENTS */
 import { Profile } from "@/content/dashboard/profile/Profile";
 
-export default function UsersPage() {
+export default function ProfilePage() {
   return <Profile />;
 }
