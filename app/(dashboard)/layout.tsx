@@ -14,7 +14,7 @@ import {
 import { Home, UsersRound } from "lucide-react";
 
 /* NAVIGATION */
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 
 /* STORES */
 import { useSidebarStore } from "@/shared/components/sidebar/stores/sidebar.store";
@@ -25,6 +25,7 @@ export default function LayoutDashboard({
   children: React.ReactNode;
 }) {
   const router = useRouter();
+  const pathname = usePathname();
 
   const expanded = useSidebarStore((s) => s.expanded);
 
@@ -59,6 +60,7 @@ export default function LayoutDashboard({
         userData={userData}
         logoutAction={async () => {}}
         goToProfileAction={() => router.push("/profile")}
+        isInProfilePage={pathname === "/profile"}
       />
       <div
         className={`flex flex-col h-dvh w-full transition-all duration-300 ${

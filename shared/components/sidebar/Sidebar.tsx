@@ -49,11 +49,13 @@ export function Sidebar({
   userData,
   logoutAction,
   goToProfileAction,
+  isInProfilePage,
 }: {
   links: LinkSidebar[];
   userData: UserData | null;
   logoutAction: () => Promise<void>;
   goToProfileAction: () => void;
+  isInProfilePage: boolean;
 }) {
   const pathname = usePathname();
 
@@ -228,7 +230,7 @@ export function Sidebar({
                   >
                     <DropdownMenu.Item
                       onClick={goToProfileAction}
-                      className={`flex items-center gap-3 rounded-xl p-2 text-sm outline-none cursor-pointer mb-2 transition-colors duration-300 border ${pathname === "/organizer/profile" ? "bg-surface/70 border-line text-primary" : "hover:bg-surface border-transparent text-body"}`}
+                      className={`flex items-center gap-3 rounded-xl p-2 text-sm outline-none cursor-pointer mb-2 transition-colors duration-300 border ${isInProfilePage ? "bg-surface/70 border-line text-primary" : "hover:bg-surface border-transparent text-body"}`}
                     >
                       <UserRound className="size-4" />
                       Perfil
