@@ -93,12 +93,12 @@ export function Sidebar({
       <aside
         className={`flex flex-col z-60 transition-all bg-background duration-300 justify-between h-dvh border-r border-r-line absolute lg:static ${expanded ? "w-64 top-0 left-0" : "lg:w-18 w-64 -left-64 top-0"}`}
       >
-        <div className="flex flex-col w-full h-full p-4">
+        <div className="flex flex-col w-full h-full">
           <div
-            className={`flex items-center mb-16 relative ${expanded ? "justify-end" : "lg:justify-center justify-end"}`}
+            className={`flex items-center mb-16 relative px-4 pt-4 ${expanded ? "justify-end" : "lg:justify-center justify-end"}`}
           >
             <div
-              className={`transition-all duration-300 pointer-events-none absolute ${expanded ? "w-24 lg:opacity-100 left-0" : "left-0 w-24 lg:w-0 lg:opacity-0 lg:-left-64"}`}
+              className={`transition-all duration-300 pointer-events-none absolute ${expanded ? "w-24 lg:opacity-100 left-4" : "left-0 w-24 lg:w-0 lg:opacity-0 lg:-left-64"}`}
             >
               <LogoIcon />
             </div>
@@ -114,76 +114,78 @@ export function Sidebar({
             </button>
           </div>
 
-          <div className="flex flex-col items-center h-full gap-2 overflow-x-hidden overflow-y-auto">
+          <div className="flex flex-col items-center h-full gap-2 overflow-hidden px-4 pb-4">
             <Tooltip.Provider delayDuration={100}>
-              {links.map((link) => (
-                <Tooltip.Root
-                  key={link.href}
-                  open={!expanded && openTooltip === link.href}
-                >
-                  <Tooltip.Trigger asChild>
-                    <Link
-                      href={link.href}
-                      onMouseEnter={() => {
-                        if (!expanded) {
-                          setOpenTooltip(link.href);
-                        }
-                      }}
-                      onMouseLeave={() => {
-                        setOpenTooltip(null);
-                      }}
-                      className={`px-[0.70rem] py-2 rounded-xl flex relative transition-all items-center duration-300 w-full ${
-                        expanded ? "gap-6" : "lg:gap-0 gap-6"
-                      } ${linkClasses(link.href)}`}
-                    >
-                      <link.icon className="size-4 min-w-4 min-h-4" />
+              {links.map((link) => {
+                if (link.label === "Perfil") return;
 
-                      <span
-                        className={`transition-all duration-300 text-sm ${
-                          expanded
-                            ? "w-full opacity-100"
-                            : "lg:w-0 w-fit lg:opacity-0 opacity-100 pointer-events-none"
-                        }`}
+                return (
+                  <Tooltip.Root
+                    key={link.href}
+                    open={!expanded && openTooltip === link.href}
+                  >
+                    <Tooltip.Trigger asChild>
+                      <Link
+                        href={link.href}
+                        onMouseEnter={() => {
+                          if (!expanded) {
+                            setOpenTooltip(link.href);
+                          }
+                        }}
+                        onMouseLeave={() => {
+                          setOpenTooltip(null);
+                        }}
+                        className={`px-[0.70rem] py-2 rounded-xl flex relative items-center w-full gap-6 ${linkClasses(link.href)}`}
                       >
-                        {link.label}
-                      </span>
-                    </Link>
-                  </Tooltip.Trigger>
+                        <link.icon className="size-4 min-w-4 min-h-4" />
 
-                  <AnimatePresence>
-                    {openTooltip === link.href && !expanded && (
-                      <Tooltip.Portal forceMount>
-                        <Tooltip.Content asChild side="right" sideOffset={25}>
-                          <motion.div
-                            initial={{
-                              opacity: 0,
-                              scale: 0.95,
-                              x: -4,
-                            }}
-                            animate={{
-                              opacity: 1,
-                              scale: 1,
-                              x: 0,
-                            }}
-                            exit={{
-                              opacity: 0,
-                              scale: 0.95,
-                              x: -4,
-                            }}
-                            transition={{
-                              duration: 0.1,
-                              ease: "easeOut",
-                            }}
-                            className="px-3 py-1 text-sm font-medium border rounded-full z-70 bg-background text-ink border-line"
-                          >
-                            {link.label}
-                          </motion.div>
-                        </Tooltip.Content>
-                      </Tooltip.Portal>
-                    )}
-                  </AnimatePresence>
-                </Tooltip.Root>
-              ))}
+                        <span
+                          className={`text-sm transition-all duration-300 ${
+                            expanded
+                              ? "w-full opacity-100"
+                              : "lg:w-0 w-fit lg:opacity-0 opacity-100 pointer-events-none"
+                          }`}
+                        >
+                          {link.label}
+                        </span>
+                      </Link>
+                    </Tooltip.Trigger>
+
+                    <AnimatePresence>
+                      {openTooltip === link.href && !expanded && (
+                        <Tooltip.Portal forceMount>
+                          <Tooltip.Content asChild side="right" sideOffset={25}>
+                            <motion.div
+                              initial={{
+                                opacity: 0,
+                                scale: 0.95,
+                                x: -4,
+                              }}
+                              animate={{
+                                opacity: 1,
+                                scale: 1,
+                                x: 0,
+                              }}
+                              exit={{
+                                opacity: 0,
+                                scale: 0.95,
+                                x: -4,
+                              }}
+                              transition={{
+                                duration: 0.1,
+                                ease: "easeOut",
+                              }}
+                              className="px-3 py-1 text-sm font-medium border rounded-full z-70 bg-background text-ink border-line"
+                            >
+                              {link.label}
+                            </motion.div>
+                          </Tooltip.Content>
+                        </Tooltip.Portal>
+                      )}
+                    </AnimatePresence>
+                  </Tooltip.Root>
+                );
+              })}
             </Tooltip.Provider>
           </div>
         </div>
