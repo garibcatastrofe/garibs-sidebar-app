@@ -13,10 +13,19 @@ import {
 /* ICONS */
 import { Home, UsersRound } from "lucide-react";
 
+/* NAVIGATION */
+import { useRouter } from "next/navigation";
+
 /* STORES */
 import { useSidebarStore } from "@/shared/components/sidebar/stores/sidebar.store";
 
-export default function LayoutDashboard({ children }: { children: React.ReactNode }) {
+export default function LayoutDashboard({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  const router = useRouter();
+
   const expanded = useSidebarStore((s) => s.expanded);
 
   const links: LinkSidebar[] = [
@@ -49,6 +58,7 @@ export default function LayoutDashboard({ children }: { children: React.ReactNod
         links={links}
         userData={userData}
         logoutAction={async () => {}}
+        goToProfileAction={() => router.push("/profile")}
       />
       <div
         className={`flex flex-col h-dvh w-full transition-all duration-300 ${

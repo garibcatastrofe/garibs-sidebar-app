@@ -19,7 +19,7 @@ import { LogoIcon } from "@/shared/icons/logo/LogoIcon";
 
 /* NAVIGATION */
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 
 /* STORES */
 import { useSidebarStore } from "@/shared/components/sidebar/stores/sidebar.store";
@@ -48,12 +48,13 @@ export function Sidebar({
   links,
   userData,
   logoutAction,
+  goToProfileAction,
 }: {
   links: LinkSidebar[];
   userData: UserData | null;
   logoutAction: () => Promise<void>;
+  goToProfileAction: () => void;
 }) {
-  const router = useRouter();
   const pathname = usePathname();
 
   const { expanded, toggleSidebar } = useSidebarStore();
@@ -226,7 +227,7 @@ export function Sidebar({
                     className="p-2 border shadow-md z-100 min-w-56 rounded-2xl border-line bg-background"
                   >
                     <DropdownMenu.Item
-                      onClick={() => router.push("/organizer/profile")}
+                      onClick={goToProfileAction}
                       className={`flex items-center gap-3 rounded-xl p-2 text-sm outline-none cursor-pointer mb-2 transition-colors duration-300 border ${pathname === "/organizer/profile" ? "bg-surface/70 border-line text-primary" : "hover:bg-surface border-transparent text-body"}`}
                     >
                       <UserRound className="size-4" />
