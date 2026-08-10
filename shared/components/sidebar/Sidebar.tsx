@@ -75,7 +75,7 @@ export function Sidebar({
   }, []);
 
   useEffect(() => {
-    const media = window.matchMedia("(max-width: 767px)");
+    const media = window.matchMedia("(max-width: 1023px)");
 
     const update = () => setIsMobile(media.matches);
 

@@ -4,7 +4,11 @@
 import { motion } from "framer-motion";
 
 /* COMPONENTS */
-import { Sidebar, UserData } from "@/shared/components/sidebar/Sidebar";
+import { UserData } from "@/shared/components/sidebar/Sidebar";
+import { SidebarDesktop } from "@/shared/components/sidebar/components/sidebarDesktop/SidebarDesktop";
+
+/* HOOKS */
+import { useState, useEffect } from "react";
 
 /* ICONS */
 import { Home, UserRound, UsersRound } from "lucide-react";
@@ -17,7 +21,6 @@ import { useSidebarStore } from "@/shared/components/sidebar/stores/sidebar.stor
 
 /* TYPES */
 import { LinkSidebar } from "@/shared/components/sidebar/types/linkSidebar";
-import { RouteTitle } from "@/shared/components/sidebar/components/routeTitle/RouteTitle";
 
 export default function LayoutDashboard({
   children,
@@ -28,6 +31,8 @@ export default function LayoutDashboard({
   const pathname = usePathname();
 
   const expanded = useSidebarStore((s) => s.expanded);
+
+  const [isMobile, setIsMobile] = useState(false);
 
   const links: LinkSidebar[] = [
     {
@@ -44,7 +49,7 @@ export default function LayoutDashboard({
       label: "Perfil",
       href: "/profile",
       icon: UserRound,
-    }
+    },
   ];
 
   const userData: UserData | null = {
@@ -53,6 +58,18 @@ export default function LayoutDashboard({
     profile_photo_url: null,
   };
 
+  useEffect(() => {
+    const media = window.matchMedia("(max-width: 1023px)");
+
+    const update = () => setIsMobile(media.matches);
+
+    update();
+
+    media.addEventListener("change", update);
+
+    return () => media.removeEventListener("change", update);
+  }, []);
+
   return (
     <motion.div
       className="relative lg:flex overflow-x-hidden overflow-y-hidden min-h-dvh"
@@ -60,13 +77,15 @@ export default function LayoutDashboard({
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5, ease: "easeInOut" }}
     >
-      <Sidebar
-        links={links}
-        userData={userData}
-        logoutAction={async () => router.push("/")}
-        goToProfileAction={() => router.push("/profile")}
-        isInProfilePage={pathname === "/profile"}
-      />
+      {!isMobile && (
+        <SidebarDesktop
+          links={links}
+          userData={userData}
+          logoutAction={async () => router.push("/")}
+          goToProfileAction={() => router.push("/profile")}
+          isInProfilePage={pathname === "/profile"}
+        />
+      )}
       <div
         className={`flex flex-col h-dvh w-full transition-all duration-300 ${
           expanded
@@ -74,7 +93,6 @@ export default function LayoutDashboard({
             : "lg:left-16 lg:w-[calc(100%-4rem)] z-40"
         }`}
       >
-        <RouteTitle links={links} />
         {children}
       </div>
     </motion.div>
