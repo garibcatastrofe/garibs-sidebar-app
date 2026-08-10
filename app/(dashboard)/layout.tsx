@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 /* COMPONENTS */
 import { UserData } from "@/shared/components/sidebar/Sidebar";
 import { SidebarDesktop } from "@/shared/components/sidebar/components/sidebarDesktop/SidebarDesktop";
+import { SidebarMobile } from "@/shared/components/sidebar/components/sidebarMobile/SidebarMobile";
 
 /* HOOKS */
 import { useState, useEffect } from "react";
@@ -93,6 +94,15 @@ export default function LayoutDashboard({
             : "lg:left-16 lg:w-[calc(100%-4rem)] z-40"
         }`}
       >
+        {isMobile && (
+          <SidebarMobile
+            links={links}
+            userData={userData}
+            logoutAction={async () => router.push("/")}
+            goToProfileAction={() => router.push("/profile")}
+            isInProfilePage={pathname === "/profile"}
+          />
+        )}
         {children}
       </div>
     </motion.div>
