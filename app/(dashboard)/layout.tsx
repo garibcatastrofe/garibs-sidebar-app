@@ -4,7 +4,6 @@
 import { motion } from "framer-motion";
 
 /* COMPONENTS */
-import { UserData } from "@/shared/components/sidebar/Sidebar";
 import { SidebarDesktop } from "@/shared/components/sidebar/components/sidebarDesktop/SidebarDesktop";
 import { SidebarMobile } from "@/shared/components/sidebar/components/sidebarMobile/SidebarMobile";
 
@@ -22,6 +21,12 @@ import { useSidebarStore } from "@/shared/components/sidebar/stores/sidebar.stor
 
 /* TYPES */
 import { LinkSidebar } from "@/shared/components/sidebar/types/linkSidebar";
+
+export type UserData = {
+  name: string;
+  email: string;
+  profile_photo_url: string | null;
+};
 
 export default function LayoutDashboard({
   children,

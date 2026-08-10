@@ -1,5 +1,5 @@
 /* TYPES */
-import { UserData } from "../Sidebar";
+import { UserData } from "@/app/(dashboard)/layout";
 import { LinkSidebar } from "./linkSidebar";
 
 export type SidebarProps = {
