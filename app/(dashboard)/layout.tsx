@@ -8,7 +8,7 @@ import { SidebarDesktop } from "@/shared/components/sidebar/components/sidebarDe
 import { SidebarMobile } from "@/shared/components/sidebar/components/sidebarMobile/SidebarMobile";
 
 /* HOOKS */
-import { useState, useEffect } from "react";
+import { useMedia } from "@/shared/hooks/useMedia";
 
 /* ICONS */
 import { Home, UserRound, UsersRound } from "lucide-react";
@@ -38,7 +38,7 @@ export default function LayoutDashboard({
 
   const expanded = useSidebarStore((s) => s.expanded);
 
-  const [isMobile, setIsMobile] = useState(false);
+  const { isMobile } = useMedia();
 
   const links: LinkSidebar[] = [
     {
@@ -63,18 +63,6 @@ export default function LayoutDashboard({
     email: "pirita@gmail.com",
     profile_photo_url: null,
   };
-
-  useEffect(() => {
-    const media = window.matchMedia("(max-width: 1023px)");
-
-    const update = () => setIsMobile(media.matches);
-
-    update();
-
-    media.addEventListener("change", update);
-
-    return () => media.removeEventListener("change", update);
-  }, []);
 
   return (
     <motion.div
