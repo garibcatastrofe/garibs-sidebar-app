@@ -7,10 +7,10 @@ import { Menu } from "lucide-react";
 import { usePathname } from "next/navigation";
 
 /* STORES */
-import { useSidebarStore } from "../../stores/sidebar.store";
+import { useSidebarStore } from "../../../stores/sidebar.store";
 
 /* TYPES */
-import { LinkSidebar } from "../../types/linkSidebar";
+import { LinkSidebar } from "../../../types/linkSidebar";
 
 export function RouteTitle({ links }: { links: LinkSidebar[] }) {
   const pathname = usePathname();

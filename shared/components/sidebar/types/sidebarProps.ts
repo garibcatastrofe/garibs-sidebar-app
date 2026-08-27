@@ -1,5 +1,5 @@
 /* TYPES */
-import { UserData } from "@/app/(dashboard)/layout";
+import { UserData } from "@/features/users/types/user.types";
 import { LinkSidebar } from "./linkSidebar";
 
 export type SidebarProps = {
@@ -7,5 +7,4 @@ export type SidebarProps = {
   userData: UserData | null;
   logoutAction: () => Promise<void>;
   goToProfileAction: () => void;
-  isInProfilePage: boolean;
 };

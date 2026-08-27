@@ -14,19 +14,14 @@ import { useMedia } from "@/shared/hooks/useMedia";
 import { Home, UserRound, UsersRound } from "lucide-react";
 
 /* NAVIGATION */
-import { useRouter, usePathname } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 /* STORES */
 import { useSidebarStore } from "@/shared/components/sidebar/stores/sidebar.store";
 
 /* TYPES */
 import { LinkSidebar } from "@/shared/components/sidebar/types/linkSidebar";
-
-export type UserData = {
-  name: string;
-  email: string;
-  profile_photo_url: string | null;
-};
+import { UserData } from "@/features/users/types/user.types";
 
 export default function LayoutDashboard({
   children,
@@ -34,7 +29,6 @@ export default function LayoutDashboard({
   children: React.ReactNode;
 }) {
   const router = useRouter();
-  const pathname = usePathname();
 
   const expanded = useSidebarStore((s) => s.expanded);
 
@@ -77,7 +71,6 @@ export default function LayoutDashboard({
           userData={userData}
           logoutAction={async () => router.push("/")}
           goToProfileAction={() => router.push("/profile")}
-          isInProfilePage={pathname === "/profile"}
         />
       )}
       <div
@@ -93,7 +86,6 @@ export default function LayoutDashboard({
             userData={userData}
             logoutAction={async () => router.push("/")}
             goToProfileAction={() => router.push("/profile")}
-            isInProfilePage={pathname === "/profile"}
           />
         )}
         {children}
