@@ -6,6 +6,8 @@ import { AnimatePresence, motion } from "framer-motion";
 /* COMPONENTS */
 import Image from "next/image";
 import { RouteTitle } from "../routeTitle/RouteTitle";
+import { ThemeButtons } from "../themeButtons/ThemeButtons";
+import { SidebarMobileOverlay } from "./sidebarMobileOverlay/SidebarMobileOverlay";
 
 /* HOOKS */
 import { useState, useEffect } from "react";
@@ -29,7 +31,6 @@ import { SidebarProps } from "../../types/sidebarProps";
 
 /* UTILS */
 import { getLinkStyles } from "../../utils/getLinkStyles";
-import { ThemeButtons } from "../themeButtons/ThemeButtons";
 
 export function SidebarMobile({
   links,
@@ -178,12 +179,7 @@ export function SidebarMobile({
           </AnimatePresence>
         </DropdownMenu.Root>
       </aside>
-      <div
-        onClick={toggleSidebar}
-        className={`absolute w-full top-0 left-0 bg-black/50 h-screen transition-all duration-300 z-50 lg:hidden lg:pointer-events-none ${
-          expanded ? "opacity-100" : "opacity-0 pointer-events-none"
-        }`}
-      ></div>
+      <SidebarMobileOverlay />
     </>
   );
 }
