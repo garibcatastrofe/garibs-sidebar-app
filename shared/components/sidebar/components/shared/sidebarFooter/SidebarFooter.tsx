@@ -10,20 +10,13 @@ import { useState } from "react";
 /* LIBS */
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 
-/* TYPES */
-import { UserData } from "@/features/users/types/user.types";
-
 export function SidebarFooter({
-  userData,
   goToProfileAction,
-  logoutAction,
   sideOffset,
   alignOffset,
   side,
 }: {
-  userData: UserData | null;
   goToProfileAction: () => void;
-  logoutAction: () => Promise<void>;
   sideOffset: number;
   alignOffset: number;
   side: "right" | "top" | "bottom" | "left";
@@ -32,11 +25,10 @@ export function SidebarFooter({
 
   return (
     <DropdownMenu.Root open={open} onOpenChange={setOpen}>
-      <SidebarFooterTrigger userData={userData} />
+      <SidebarFooterTrigger />
       <SidebarFooterView
         open={open}
         goToProfileAction={goToProfileAction}
-        logoutAction={logoutAction}
         sideOffset={sideOffset}
         alignOffset={alignOffset}
         side={side}

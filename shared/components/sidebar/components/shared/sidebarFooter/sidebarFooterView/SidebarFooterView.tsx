@@ -18,20 +18,21 @@ import { usePathname } from "next/navigation";
 export function SidebarFooterView({
   open,
   goToProfileAction,
-  logoutAction,
   sideOffset,
   alignOffset,
   side,
 }: {
   open: boolean;
   goToProfileAction: () => void;
-  logoutAction: () => Promise<void>;
   sideOffset: number;
   alignOffset: number;
   side: "right" | "top" | "bottom" | "left";
 }) {
   const pathname = usePathname();
   const isInProfilePage = pathname === "/profile";
+
+  // Puede venir de un store de authentication
+  const logoutAction = async () => {};
 
   return (
     <AnimatePresence>

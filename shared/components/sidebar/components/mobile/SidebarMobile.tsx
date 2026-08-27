@@ -5,6 +5,9 @@ import { RouteTitle } from "./routeTitle/RouteTitle";
 import { SidebarMobileOverlay } from "./sidebarMobileOverlay/SidebarMobileOverlay";
 import { SidebarFooter } from "../shared/sidebarFooter/SidebarFooter";
 
+/* DATA */
+import { links } from "../../data/links";
+
 /* HOOKS */
 import { useMounted } from "@/shared/hooks/useMounted";
 
@@ -14,23 +17,16 @@ import { LogoIcon } from "@/shared/icons/logo/LogoIcon";
 
 /* NAVIGATION */
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 /* STORES */
 import { useSidebarStore } from "../../stores/sidebar.store";
 
-/* TYPES */
-import { SidebarProps } from "../../types/sidebarProps";
-
 /* UTILS */
 import { getLinkStyles } from "../../utils/getLinkStyles";
 
-export function SidebarMobile({
-  links,
-  userData,
-  logoutAction,
-  goToProfileAction,
-}: SidebarProps) {
+export function SidebarMobile() {
+  const router = useRouter();
   const pathname = usePathname();
 
   const expanded = useSidebarStore((s) => s.expanded);
@@ -82,9 +78,10 @@ export function SidebarMobile({
         </div>
 
         <SidebarFooter
-          userData={userData}
-          goToProfileAction={goToProfileAction}
-          logoutAction={logoutAction}
+          goToProfileAction={() => {
+            router.push("/profile");
+            toggleSidebar();
+          }}
           sideOffset={8}
           alignOffset={16}
           side="top"

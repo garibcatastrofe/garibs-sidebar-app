@@ -6,6 +6,9 @@ import { AnimatePresence, motion } from "framer-motion";
 /* COMPONENTS */
 import { SidebarFooter } from "../shared/sidebarFooter/SidebarFooter";
 
+/* DATA */
+import { links } from "../../data/links";
+
 /* HOOKS */
 import { useState } from "react";
 import { useMounted } from "@/shared/hooks/useMounted";
@@ -16,7 +19,7 @@ import { LogoIcon } from "@/shared/icons/logo/LogoIcon";
 
 /* NAVIGATION */
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 /* LIBS */
 import * as Tooltip from "@radix-ui/react-tooltip";
@@ -24,18 +27,11 @@ import * as Tooltip from "@radix-ui/react-tooltip";
 /* STORES */
 import { useSidebarStore } from "../../stores/sidebar.store";
 
-/* TYPES */
-import { SidebarProps } from "../../types/sidebarProps";
-
 /* UTILS */
 import { getLinkStyles } from "../../utils/getLinkStyles";
 
-export function SidebarDesktop({
-  links,
-  userData,
-  logoutAction,
-  goToProfileAction,
-}: SidebarProps) {
+export function SidebarDesktop() {
+  const router = useRouter();
   const pathname = usePathname();
 
   const expanded = useSidebarStore((s) => s.expanded);
@@ -148,9 +144,7 @@ export function SidebarDesktop({
       </div>
 
       <SidebarFooter
-        userData={userData}
-        goToProfileAction={goToProfileAction}
-        logoutAction={logoutAction}
+        goToProfileAction={() => router.push("/profile")}
         sideOffset={12}
         alignOffset={0}
         side="right"

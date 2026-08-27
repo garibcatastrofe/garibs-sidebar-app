@@ -15,9 +15,16 @@ import { usePathname } from "next/navigation";
 /* TYPES */
 import { UserData } from "@/features/users/types/user.types";
 
-export function SidebarFooterTrigger({ userData }: { userData: UserData | null }) {
+export function SidebarFooterTrigger() {
   const pathname = usePathname();
   const isInProfilePage = pathname === "/profile";
+
+  // Puede venir de un store de authentication
+  const userData: UserData | null = {
+    name: "Pirita Dreemurr",
+    email: "pirita@gmail.com",
+    profile_photo_url: null,
+  };
 
   return (
     <DropdownMenu.Trigger asChild>
