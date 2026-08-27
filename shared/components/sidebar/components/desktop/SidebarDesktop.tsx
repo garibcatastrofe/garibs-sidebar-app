@@ -5,7 +5,7 @@ import { AnimatePresence, motion } from "framer-motion";
 
 /* COMPONENTS */
 import Image from "next/image";
-import { ThemeButtons } from "../themeButtons/ThemeButtons";
+import { ThemeButtons } from "../shared/themeButtons/ThemeButtons";
 
 /* HOOKS */
 import { useState } from "react";

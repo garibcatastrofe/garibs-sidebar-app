@@ -4,8 +4,8 @@
 import { motion } from "framer-motion";
 
 /* COMPONENTS */
-import { SidebarDesktop } from "@/shared/components/sidebar/components/sidebarDesktop/SidebarDesktop";
-import { SidebarMobile } from "@/shared/components/sidebar/components/sidebarMobile/SidebarMobile";
+import { SidebarDesktop } from "@/shared/components/sidebar/components/desktop/SidebarDesktop";
+import { SidebarMobile } from "@/shared/components/sidebar/components/mobile/SidebarMobile";
 
 /* HOOKS */
 import { useMedia } from "@/shared/hooks/useMedia";

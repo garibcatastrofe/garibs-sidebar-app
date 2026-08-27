@@ -5,8 +5,8 @@ import { AnimatePresence, motion } from "framer-motion";
 
 /* COMPONENTS */
 import Image from "next/image";
-import { RouteTitle } from "../routeTitle/RouteTitle";
-import { ThemeButtons } from "../themeButtons/ThemeButtons";
+import { RouteTitle } from "./routeTitle/RouteTitle";
+import { ThemeButtons } from "../shared/themeButtons/ThemeButtons";
 import { SidebarMobileOverlay } from "./sidebarMobileOverlay/SidebarMobileOverlay";
 
 /* HOOKS */
@@ -49,6 +49,8 @@ export function SidebarMobile({
   const { mounted } = useMounted();
 
   if (!mounted) return null;
+
+  
 
   return (
     <>
