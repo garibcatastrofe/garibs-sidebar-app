@@ -5,9 +5,11 @@ import { AnimatePresence, motion } from "framer-motion";
 
 /* COMPONENTS */
 import Image from "next/image";
+import { ThemeButtons } from "../themeButtons/ThemeButtons";
 
 /* HOOKS */
-import { useState, useEffect } from "react";
+import { useState } from "react";
+import { useMounted } from "@/shared/hooks/useMounted";
 
 /* ICONS */
 import {
@@ -35,7 +37,6 @@ import { SidebarProps } from "../../types/sidebarProps";
 
 /* UTILS */
 import { getLinkStyles } from "../../utils/getLinkStyles";
-import { ThemeButtons } from "../themeButtons/ThemeButtons";
 
 export function SidebarDesktop({
   links,
@@ -51,15 +52,7 @@ export function SidebarDesktop({
 
   const [openTooltip, setOpenTooltip] = useState<string | null>(null);
   const [open, setOpen] = useState(false);
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    const changeTheme = () => {
-      setMounted(true);
-    };
-
-    changeTheme();
-  }, []);
+  const { mounted } = useMounted();
 
   if (!mounted) return null;
 

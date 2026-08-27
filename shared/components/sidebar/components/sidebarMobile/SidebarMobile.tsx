@@ -10,7 +10,8 @@ import { ThemeButtons } from "../themeButtons/ThemeButtons";
 import { SidebarMobileOverlay } from "./sidebarMobileOverlay/SidebarMobileOverlay";
 
 /* HOOKS */
-import { useState, useEffect } from "react";
+import { useState } from "react";
+import { useMounted } from "@/shared/hooks/useMounted";
 
 /* ICONS */
 import { LogOut, ChevronsLeft, UserRound, ChevronsUpDown } from "lucide-react";
@@ -45,15 +46,7 @@ export function SidebarMobile({
   const toggleSidebar = useSidebarStore((s) => s.toggleSidebar);
 
   const [open, setOpen] = useState(false);
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    const changeTheme = () => {
-      setMounted(true);
-    };
-
-    changeTheme();
-  }, []);
+  const { mounted } = useMounted();
 
   if (!mounted) return null;
 

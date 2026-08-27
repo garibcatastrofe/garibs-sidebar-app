@@ -2,22 +2,14 @@
 
 /* HOOKS */
 import { useTheme } from "next-themes";
-import { useEffect, useState } from "react";
+import { useMounted } from "@/shared/hooks/useMounted";
 
 /* ICONS */
 import { Sun, Moon } from "lucide-react";
 
 export function ThemeButtons() {
   const { resolvedTheme, setTheme } = useTheme();
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    const changeTheme = () => {
-      setMounted(true);
-    };
-
-    changeTheme();
-  }, []);
+  const { mounted } = useMounted();
 
   if (!mounted) return null;
 
